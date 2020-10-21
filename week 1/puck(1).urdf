@@ -1,0 +1,40 @@
+<robot name="puck">
+    
+<material name="blue">
+    <color rgba="0 0 0.8 1"/>
+  </material>
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+
+<link name="base">
+        <inertial>
+         <origin xyz ="0 0 0" rpy="0 0 0"/>
+         <mass value="0.048"/>
+         <inertia
+           ixx="5.625"
+           iyy="5.625"
+           izz="6.75"
+           ixy="0.0"
+           ixz="0.0"
+           iyz="0.0" />        
+        </inertial>
+
+
+        <visual>
+          <origin xyz ="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="0.02" radius="0.05"/>
+        </geometry>
+        <material name="black">
+          <color rgba="0.0 0.0 0.0 1.0"/>
+        </material>
+      </visual>  
+      <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+              <cylinder length="0.02" radius="0.05"/>
+            </geometry>
+      </collision> 
+   </link>
+</robot>

@@ -1,0 +1,237 @@
+<robot name="table">
+    
+<material name="blue">
+    <color rgba="0 0 0.8 1"/>
+  </material>
+  <material name="black">
+    <color rgba="0 0 0 1"/>
+  </material>
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+
+<link name="base">
+   <visual>
+     <geometry>
+        <box size="0.90 0.50 0.30"/>
+     </geometry>
+     <origin xyz ="0.45 -0.25 0.15" rpy="0 0 0"/>
+     <material name="white"/>
+   </visual>
+    <collision>
+        <geometry>
+        <box size="0.90 0.50 0.30"/>
+     </geometry>
+     <origin xyz ="0.45 -0.25 0.15" rpy="0 0 0"/>
+
+    </collision>
+    <contact>
+      <lateral_friction value="0.01"/>
+      <spinning_friction value=".001"/>
+    </contact>
+</link>
+<link name="baseE">
+   <visual>
+     <geometry>
+        <box size="0.90 0.50 0.30"/>
+     </geometry>
+     <origin xyz ="0.45 0.25 0.15" rpy="0 0 0"/>
+     <material name="white"/>
+   </visual>
+    <collision>
+         <geometry>
+        <box size="0.90 0.50 0.30"/>
+     </geometry>
+     <origin xyz ="0.45 0.25 0.15" rpy="0 0 0"/>
+
+    </collision>
+    <contact>
+      <lateral_friction value="0.01"/>
+      <spinning_friction value=".001"/>
+    </contact>
+</link>
+<joint name="base_to_base1" type="fixed">
+<parent link="base"/>
+  <child link="baseE"/>
+<origin xyz="0 0 0"/>
+</joint>
+<link name="baseF">
+   <visual>
+     <geometry>
+        <box size="0.90 0.50 0.30"/>
+     </geometry>
+     <origin xyz ="-0.45 -0.25 0.15" rpy="0 0 0"/>
+     <material name="white"/>
+   </visual>
+    <collision>
+        <geometry>
+        <box size="0.90 0.50 0.30"/>
+     </geometry>
+     <origin xyz ="-0.45 -0.25 0.15" rpy="0 0 0"/>
+
+    </collision>
+    <contact>
+      <lateral_friction value="0.01"/>
+      <spinning_friction value=".001"/>
+    </contact>
+</link>
+<joint name="base_to_base2" type="fixed">
+<parent link="base"/>
+  <child link="baseF"/>
+<origin xyz="0 0 0"/>
+</joint>
+<link name="baseG">
+   <visual>
+     <geometry>
+        <box size="0.90 0.50 0.30"/>
+     </geometry>
+     <origin xyz ="-0.45 0.25 0.15" rpy="0 0 0"/>
+     <material name="white"/>
+   </visual>
+    <collision>
+         <geometry>
+        <box size="0.90 0.50 0.30"/>
+     </geometry>
+     <origin xyz ="-0.45 0.25 0.15" rpy="0 0 0"/>
+
+    </collision>
+    <contact>
+      <lateral_friction value="0.01"/>
+      <spinning_friction value=".001"/>
+    </contact>
+</link>
+<joint name="base_to_base3" type="fixed">
+<parent link="base"/>
+  <child link="baseG"/>
+<origin xyz="0 0 0"/>
+</joint>
+<link name="Y_N">
+    <visual>
+      <geometry>
+        <box size="1.8 0.05 0.3"/>
+      </geometry>
+           <material name="blue"/>
+      <origin rpy="0 0 0" xyz="0 -0.525 0.2"/>
+    </visual>
+    <collision>
+        <geometry>
+        <box size="1.8 0.05 0.3"/>
+      </geometry>
+        <origin rpy="0 0 0" xyz="0 -0.525 0.2"/>
+
+    </collision>
+
+</link>
+<joint name="base_to_right" type="fixed">
+<parent link="base"/>
+  <child link="Y_N"/>
+<origin xyz="0 0 0"/>
+</joint>
+<link name="Y_P">
+    <visual>
+      <geometry>
+        <box size="1.8 0.05 0.3"/>
+      </geometry>
+           <material name="blue"/>
+      <origin rpy="0 0 0" xyz="0 0.525 0.2"/>
+    </visual>
+    <collision>
+        <geometry>
+        <box size="1.8 0.05 0.3"/>
+      </geometry>
+        <origin rpy="0 0 0" xyz="0 0.525 0.2"/>
+
+    </collision>
+</link>
+<joint name="base_to_left" type="fixed">
+<parent link="base"/>
+  <child link="Y_P"/>
+<origin xyz="0 0 0"/>
+</joint>
+
+<link name="Xpos_Ypos">
+    <visual>
+      <geometry>
+        <box size="0.3 0.05 0.3"/>
+      </geometry>
+      <origin rpy="0 0 1.57" xyz="0.925 0.4 0.2"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+        <geometry>
+        <box size="0.3 0.05 0.3"/>
+      </geometry>
+      <origin rpy="0 0 1.57" xyz="0.925 0.4 0.2"/>
+
+    </collision>
+  </link>
+<joint name="base_to_frontR" type="fixed">
+<parent link="base"/>
+  <child link="Xpos_Ypos"/>
+<origin xyz="0 0 0"/>
+</joint>
+<link name="Xpos_Yneg">
+    <visual>
+      <geometry>
+        <box size="0.3 0.05 0.3"/>
+      </geometry>
+      <origin rpy="0 0 1.57" xyz="0.925 -0.4 0.2"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+         <geometry>
+        <box size="0.3 0.05 0.3"/>
+      </geometry>
+      <origin rpy="0 0 1.57" xyz="0.925 -0.4 0.2"/>
+
+    </collision>
+ </link>
+<joint name="base_to_frontL" type="fixed">
+<parent link="base"/>
+  <child link="Xpos_Yneg"/>
+<origin xyz="0 0 0"/>
+</joint>
+<link name="Xneg_Ypos">
+    <visual>
+      <geometry>
+        <box size="0.3 0.05 0.3"/>
+      </geometry>
+      <origin rpy="0 0 1.57" xyz="-0.925 0.4 0.2"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+        <geometry>
+        <box size="0.3 0.05 0.3"/>
+      </geometry>
+      <origin rpy="0 0 1.57" xyz="-0.925 0.4 0.2"/>
+
+    </collision>
+ </link>
+<joint name="base_to_backL" type="fixed">
+<parent link="base"/>
+  <child link="Xneg_Ypos"/>
+<origin xyz="0 0 0"/>
+</joint>
+<link name="Xneg_Yneg">
+    <visual>
+      <geometry>
+        <box size="0.3 0.05 0.3"/>
+      </geometry>
+      <origin rpy="0 0 1.57" xyz="-0.925 -0.4 0.2"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+         <geometry>
+        <box size="0.3 0.05 0.3"/>
+      </geometry>
+      <origin rpy="0 0 1.57" xyz="-0.925 -0.4 0.2"/>
+
+    </collision>
+ </link>
+<joint name="base_to_backR" type="fixed">
+<parent link="base"/>
+  <child link="Xneg_Yneg"/>
+<origin xyz="0 0 0"/>
+</joint>
+ 
+</robot>
