@@ -18,7 +18,7 @@ def getcentre(image):
             if r!=0:
                 center = (int(x),int(y))
                 cv2.circle(image,center,r,(0,255,0),2)
-                centorg = ((center[0]-image.shape[1]/2), (center[1]-image.shape[0]/2)) 
+                centorg = ((center[0]-image.shape[1]/2), (center[1]-image.shape[0]/2))   #shifting the origin to centre of table and then locating centre of puck
     return centorg
     
 
@@ -69,17 +69,17 @@ for i in range(10000):
     image=images[2]
     centrec = getcentre(image)
     
-    centrepoints.append(centrec)
-    timestamps.append(time.time())
+    centrepoints.append(centrec) #append all centres in a list
+    timestamps.append(time.time())   #time at which the centre position was recorded appended into this list
     if(i%2==0 and i!=0):
             print(centrec)
-            dx = centrepoints[i-2][0] - centrepoints[i][0]
-            dy = centrepoints[i-2][1] - centrepoints[i][1]
-            distance = math.sqrt(abs(dx)*abs(dx) + abs(dy)*abs(dy))
+            dx = centrepoints[i-2][0] - centrepoints[i][0]    #difference in x-coord of the two centre positions at i and i-2
+            dy = centrepoints[i-2][1] - centrepoints[i][1]    #difference in y-coord of the two centre positions at i and i-2
+            distance = math.sqrt(abs(dx)*abs(dx) + abs(dy)*abs(dy))  #distance btw the two centres
             print(distance)
-            velocity = distance/abs(timestamps[i]-timestamps[i-2])
+            velocity = distance/abs(timestamps[i]-timestamps[i-2])  #speed calc using speed=distance/time
             print(velocity)
-            angle = math.degrees(math.atan2(dy, dx))
+            angle = math.degrees(math.atan2(dy, dx))     #angle from the x-axis
             print("angle =", angle)
     time.sleep(1./1000.)
 p.disconnect()
