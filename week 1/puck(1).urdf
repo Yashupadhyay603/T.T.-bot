@@ -1,12 +1,4 @@
 <robot name="puck">
-    
-<material name="blue">
-    <color rgba="0 0 0.8 1"/>
-  </material>
-  <material name="white">
-    <color rgba="1 1 1 1"/>
-  </material>
-
 <link name="base">
         <inertial>
          <origin xyz ="0 0 0" rpy="0 0 0"/>
@@ -19,8 +11,6 @@
            ixz="0.0"
            iyz="0.0" />        
         </inertial>
-
-
         <visual>
           <origin xyz ="0 0 0" rpy="0 0 0"/>
         <geometry>
