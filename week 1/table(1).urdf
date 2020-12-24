@@ -11,98 +11,49 @@
   </material>
 
 <link name="base">
+<inertial>
+         <origin xyz ="0 0 0.15" rpy="0 0 0"/>
+         <mass value="50"/>
+         <inertia
+           ixx="1.4167"
+           iyy="3.75"
+           izz="4.417"
+           ixy="0.0"
+           ixz="0.0"
+           iyz="0.0" />
+        </inertial>
    <visual>
      <geometry>
-        <box size="0.90 0.50 0.30"/>
+        <box size="1.8 1 0.30"/>
      </geometry>
-     <origin xyz ="0.45 -0.25 0.15" rpy="0 0 0"/>
+     <origin xyz ="0 0 0.15" rpy="0 0 0"/>
      <material name="white"/>
    </visual>
     <collision>
-<origin xyz ="0.45 -0.25 0.15" rpy="0 0 0"/>
+<origin xyz ="0 0 0.15" rpy="0 0 0"/>
         <geometry>
-        <box size="0.90 0.50 0.30"/>
+        <box size="1.8 1 0.30"/>
      </geometry>
 
     </collision>
     <contact>
       <lateral_friction value="0.01"/>
-      <spinning_friction value=".001"/>
+      <spinning_friction value="0.001"/>
     </contact>
 </link>
-<link name="baseE">
-   <visual>
-     <geometry>
-        <box size="0.90 0.50 0.30"/>
-     </geometry>
-     <origin xyz ="0.45 0.25 0.15" rpy="0 0 0"/>
-     <material name="white"/>
-   </visual>
-    <collision>
-<origin xyz ="0.45 0.25 0.15" rpy="0 0 0"/>
-         <geometry>
-        <box size="0.90 0.50 0.30"/>
-     </geometry>
-    </collision>
-    <contact>
-      <lateral_friction value="0.01"/>
-      <spinning_friction value=".001"/>
-    </contact>
-</link>
-<joint name="base_to_base1" type="fixed">
-<parent link="base"/>
-  <child link="baseE"/>
-<origin xyz="0 0 0"/>
-</joint>
-<link name="baseF">
-   <visual>
-     <geometry>
-        <box size="0.90 0.50 0.30"/>
-     </geometry>
-     <origin xyz ="-0.45 -0.25 0.15" rpy="0 0 0"/>
-     <material name="white"/>
-   </visual>
-    <collision>
-<origin xyz ="-0.45 -0.25 0.15" rpy="0 0 0"/>
-        <geometry>
-        <box size="0.90 0.50 0.30"/>
-     </geometry>
-    </collision>
-    <contact>
-      <lateral_friction value="0.01"/>
-      <spinning_friction value=".001"/>
-    </contact>
-</link>
-<joint name="base_to_base2" type="fixed">
-<parent link="base"/>
-  <child link="baseF"/>
-<origin xyz="0 0 0"/>
-</joint>
-<link name="baseG">
-   <visual>
-     <geometry>
-        <box size="0.90 0.50 0.30"/>
-     </geometry>
-     <origin xyz ="-0.45 0.25 0.15" rpy="0 0 0"/>
-     <material name="white"/>
-   </visual>
-    <collision>
- <origin xyz ="-0.45 0.25 0.15" rpy="0 0 0"/>
-         <geometry>
-        <box size="0.90 0.50 0.30"/>
-     </geometry>
-    </collision>
-    <contact>
-      <lateral_friction value="0.01"/>
-      <spinning_friction value=".001"/>
-    </contact>
-</link>
-<joint name="base_to_base3" type="fixed">
-<parent link="base"/>
-  <child link="baseG"/>
-<origin xyz="0 0 0"/>
-</joint>
+
 <link name="Y_N">
+<inertial>
+         <origin rpy="0 0 0" xyz="0 -0.525 0.2"/>
+         <mass value="50"/>
+         <inertia
+           ixx="0.3854"
+           iyy="13.875"
+           izz="13.51"
+           ixy="0.0"
+           ixz="0.0"
+           iyz="0.0" />
+        </inertial>
     <visual>
       <geometry>
         <box size="1.8 0.05 0.4"/>
@@ -115,10 +66,11 @@
         <geometry>
         <box size="1.8 0.05 0.3"/>
       </geometry>
-
-
     </collision>
-
+    <contact>
+      <lateral_friction value="0.01"/>
+      <spinning_friction value="0.001"/>
+    </contact>
 </link>
 <joint name="base_to_right" type="fixed">
 <parent link="base"/>
@@ -126,6 +78,17 @@
 <origin xyz="0 0 0"/>
 </joint>
 <link name="Y_P">
+<inertial>
+         <origin rpy="0 0 0" xyz="0 0.525 0.2"/>
+         <mass value="50"/>
+         <inertia
+           ixx="0.3854"
+           iyy="13.875"
+           izz="13.51"
+           ixy="0.0"
+           ixz="0.0"
+           iyz="0.0" />
+        </inertial>
     <visual>
       <geometry>
         <box size="1.8 0.05 0.4"/>
@@ -138,9 +101,11 @@
         <geometry>
         <box size="1.8 0.05 0.3"/>
       </geometry>
-
-
     </collision>
+        <contact>
+      <lateral_friction value="0.01"/>
+      <spinning_friction value="0.001"/>
+    </contact>
 </link>
 <joint name="base_to_left" type="fixed">
 <parent link="base"/>
@@ -149,6 +114,17 @@
 </joint>
 
 <link name="Xpos_Ypos">
+<inertial>
+         <origin rpy="0 0 1.57" xyz="0.925 0.4 0.2"/>
+         <mass value="25"/>
+         <inertia
+           ixx="0.33854"
+           iyy="0.5208"
+           izz="0.1927"
+           ixy="0.0"
+           ixz="0.0"
+           iyz="0.0" />
+        </inertial>
     <visual>
       <geometry>
         <box size="0.3 0.05 0.4"/>
@@ -162,6 +138,10 @@
         <box size="0.3 0.05 0.3"/>
       </geometry>
     </collision>
+        <contact>
+      <lateral_friction value="0.01"/>
+      <spinning_friction value="0.001"/>
+    </contact>
   </link>
 <joint name="base_to_frontR" type="fixed">
 <parent link="base"/>
@@ -169,6 +149,17 @@
 <origin xyz="0 0 0"/>
 </joint>
 <link name="Xpos_Yneg">
+<inertial>
+<origin rpy="0 0 1.57" xyz="0.925 -0.4 0.2"/>
+         <mass value="25"/>
+         <inertia
+           ixx="0.33854"
+           iyy="0.5208"
+           izz="0.1927"
+           ixy="0.0"
+           ixz="0.0"
+           iyz="0.0" />
+        </inertial>
     <visual>
       <geometry>
         <box size="0.3 0.05 0.4"/>
@@ -181,8 +172,11 @@
          <geometry>
         <box size="0.3 0.05 0.3"/>
       </geometry>
-
     </collision>
+        <contact>
+      <lateral_friction value="0.01"/>
+      <spinning_friction value="0.001"/>
+    </contact>
  </link>
 <joint name="base_to_frontL" type="fixed">
 <parent link="base"/>
@@ -190,6 +184,17 @@
 <origin xyz="0 0 0"/>
 </joint>
 <link name="Xneg_Ypos">
+<inertial>
+<origin rpy="0 0 1.57" xyz="-0.925 0.4 0.2"/>
+         <mass value="25"/>
+         <inertia
+           ixx="0.33854"
+           iyy="0.5208"
+           izz="0.1927"
+           ixy="0.0"
+           ixz="0.0"
+           iyz="0.0" />
+        </inertial>
     <visual>
       <geometry>
         <box size="0.3 0.05 0.4"/>
@@ -203,6 +208,10 @@
         <box size="0.3 0.05 0.3"/>
       </geometry>
     </collision>
+        <contact>
+      <lateral_friction value="0.01"/>
+      <spinning_friction value="0.001"/>
+    </contact>
  </link>
 <joint name="base_to_backL" type="fixed">
 <parent link="base"/>
@@ -210,6 +219,17 @@
 <origin xyz="0 0 0"/>
 </joint>
 <link name="Xneg_Yneg">
+<inertial>
+<origin rpy="0 0 1.57" xyz="-0.925 -0.4 0.2"/>
+         <mass value="25"/>
+         <inertia
+           ixx="0.33854"
+           iyy="0.5208"
+           izz="0.1927"
+           ixy="0.0"
+           ixz="0.0"
+           iyz="0.0" />
+        </inertial>
     <visual>
       <geometry>
         <box size="0.3 0.05 0.4"/>
@@ -223,6 +243,10 @@
         <box size="0.3 0.05 0.3"/>
       </geometry>
     </collision>
+        <contact>
+      <lateral_friction value="0.01"/>
+      <spinning_friction value="0.001"/>
+    </contact>
  </link>
 <joint name="base_to_backR" type="fixed">
 <parent link="base"/>
