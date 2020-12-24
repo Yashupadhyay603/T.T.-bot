@@ -55,15 +55,6 @@ plane = p.loadURDF("plane.urdf")
 table_pos = [0, 0, 0]
 table_ori = p.getQuaternionFromEuler([0, 0, 0])
 table = p.loadURDF("table(1).urdf", table_pos, table_ori)
-# num_joint = p.getNumJoints(table)
-
-# coefficient of restitution =1 for walls
-p.changeDynamics(table,0,restitution=1)
-p.changeDynamics(table,1,restitution=1)
-p.changeDynamics(table,2,restitution=1)
-p.changeDynamics(table,3,restitution=1)
-p.changeDynamics(table,4,restitution=1)
-p.changeDynamics(table,5,restitution=1)
 
 # setting kuka bot
 kuka = p.loadURDF("model.urdf", [-1.0, 0, 0], p.getQuaternionFromEuler([0, 0, 0]))
@@ -78,8 +69,8 @@ ALPHA = 1
 centrepoints = []
 timestamps = []
 for i in range(10000):
-    p.setRealTimeSimulation(1)
-#     p.stepSimulation()
+    #p.setRealTimeSimulation(1)
+    p.stepSimulation()
 
      # #puck_pos, puck_ori = p.getBasePositionAndOrientation(puck)
     #
@@ -98,11 +89,11 @@ for i in range(10000):
     # #p.stepSimulation()
     rgb= np.reshape(rgb,(112,112,4))
     rgb= np.uint8(rgb)
-#     p.stepSimulation()
+    p.stepSimulation()
     image= cv2.cvtColor(rgb,cv2.COLOR_BGR2RGB)
-#     p.stepSimulation()
+    p.stepSimulation()
     centrec = getcentre(image)
-#     p.stepSimulation()
+    p.stepSimulation()
     #
     centrepoints.append(centrec)  # append all centres in a list
     timestamps.append(time.time())  # time at which the centre position was recorded appended into this list
@@ -118,6 +109,6 @@ for i in range(10000):
         print("angle =", angle)
 
 
-    time.sleep(1. / 2400.)
+    time.sleep(1. / 240.)
 
 p.disconnect()
