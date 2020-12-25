@@ -9,7 +9,7 @@ import math
 def simple():
     x=np.random.randint(3,9)/10
     y=np.random.randint(-4,4)/10
-    puck_pos = [x, y, 0.30]
+    puck_pos = [x, y, 0.32]
     puck_ori = p.getQuaternionFromEuler([0, 0, 0])
     puck = p.loadURDF("puck(1).urdf", puck_pos, puck_ori)
     vel = np.random.randint(-20, 0) / 10
@@ -21,7 +21,7 @@ def simple():
 def notsosimple():
     x = np.random.randint(3, 9) / 10
     y = np.random.randint(-4, 4) / 10
-    puck_pos = [x, y, 0.30]
+    puck_pos = [x, y, 0.32]
     puck_ori = p.getQuaternionFromEuler([0, 0, 0])
     puck = p.loadURDF("puck(1).urdf", puck_pos, puck_ori)
     vel_x = np.random.randint(-20, 0) / 10
@@ -90,8 +90,9 @@ ALPHA = 1
 centrepoints = []
 timestamps = []
 for i in range(10000):
-    # p.setRealTimeSimulation(1)
-    p.stepSimulation()
+    p.setRealTimeSimulation(1)
+    p.setTimeStep(1/100)
+    # p.stepSimulation()
 
     # #puck_pos, puck_ori = p.getBasePositionAndOrientation(puck)
     #
@@ -104,19 +105,19 @@ for i in range(10000):
     #
     # # getting images
     images = p.getCameraImage(112, 112, viewMatrix=view, projectionMatrix=projection)
-    p.stepSimulation()
+    # p.stepSimulation()
     rgb = images[2]
     rgb = np.array(rgb)
     # #p.stepSimulation()
     rgb = np.reshape(rgb, (112, 112, 4))
     rgb = np.uint8(rgb)
-    p.stepSimulation()
+    # p.stepSimulation()
     image = cv2.cvtColor(rgb, cv2.COLOR_BGR2RGB)
     # cv2.imshow("image0", image)
     # cv2.waitKey(0)
-    p.stepSimulation()
+    # p.stepSimulation()
     centrec = getcentre(image)
-    p.stepSimulation()
+    # p.stepSimulation()
     # #
     centrepoints.append(centrec)  # append all centres in a list
     timestamps.append(time.time())
@@ -136,8 +137,9 @@ for i in range(10000):
         angle = math.degrees(math.atan2(dy, dx))  # angle from the x-axis
         print("angle =", angle)
         velac = p.getBaseVelocity(puck)
-        print("actual velocity", velac)
+        abs_vel = math.sqrt((velac[0][0]**2)+(velac[0][1]**2))
+        print("absolute speed", abs_vel)
 
-    time.sleep(1. / 240.)
+    # time.sleep(1)
 
 p.disconnect()
