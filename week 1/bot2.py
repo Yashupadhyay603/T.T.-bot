@@ -63,10 +63,14 @@ pixelpermetric = float(106 / 1.9)
 # setting plane
 plane = p.loadURDF("plane.urdf")
 
-# setting table
+# setting bot and table
 table_pos = [0, 0, 0]
 table_ori = p.getQuaternionFromEuler([0, 0, 0])
 table = p.loadURDF("table(1).urdf", table_pos, table_ori)
+
+hitbot_pos=[-0.45,0,0.26]
+hitbot_ori=p.getQuaternionFromEuler([0,0,0])
+hitbot=p.loadURDF("hitbot.urdf",hitbot_pos,hitbot_ori)
 
 p.changeDynamics(table,0,restitution=1)
 p.changeDynamics(table,1,restitution=1)
@@ -76,10 +80,11 @@ p.changeDynamics(table,4,restitution=1)
 p.changeDynamics(table,5,restitution=1)
 
 # setting kuka bot
-kuka = p.loadURDF("model.urdf", [-1.0, 0, 0], p.getQuaternionFromEuler([0, 0, 0]))
+# kuka = p.loadURDF("model.urdf", [-1.0, 0, 0], p.getQuaternionFromEuler([0, 0, 0]))
 
-# creating constraints for table
+# creating constraints for table and bot
 p.createConstraint(plane, -1, table, -1, p.JOINT_FIXED, [0, 0, 0], table_pos, [0, 0, 0])
+p.createConstraint(table,-1,hitbot,-1, p.JOINT_FIXED,[0,0,0],hitbot_pos,[0,0,0],hitbot_ori)
 
 time.sleep(1)
 count = 0
