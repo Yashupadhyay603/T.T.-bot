@@ -64,7 +64,7 @@ def calculatevelocity(i, image, puck):
     if i % 10 == 0 and i !=0:
         framecheck = i-10
         totaldistance = 0
-        angle = math.degrees(math.atan2((centrepoints[i-5][1] - centrepoints[i-10][1]), centrepoints[i-5][0] - centrepoints[i-10][1]))  # angle from the x-axis
+        angle = math.degrees(math.atan2((centrepoints[i-8][1] - centrepoints[i-10][1]), centrepoints[i-5][0] - centrepoints[i-10][1]))  # angle from the x-axis
         # print(centrec)
         for j in range(framecheck, i):
             dx = centrepoints[j + 1][0] - centrepoints[j][0]  # difference in x-coord of the two centre positions at i and i-2
@@ -80,7 +80,35 @@ def calculatevelocity(i, image, puck):
         velac = p.getBaseVelocity(puck)
         # abs_vel = math.sqrt((velac[0][0]**2)+(velac[0][1]**2))
         # print("actual velocity", velac)
-    return velocity, centre, angle, velac
+    if velocity>0:
+        return velocity, centre, angle  #, velac
+    else:
+        return None
+
+
+def cal_pos_defend(position,velocity,angle):
+    x_vel=velocity*math.cos(math.radians(angle))
+    y_vel=velocity*math.sin(math.radians(angle))
+    x_pos=-x_vel+position[0]
+    y_pos=0
+    time=0.35
+    while(1):
+        t=0
+        if(y_vel<0):
+            t=(0.5+position[1])/y_vel
+            y_vel=-y_vel
+        elif(y_vel>0):
+            t=(0.5-position[1])/y_vel
+            y_vel=-y_vel
+        if t<time:
+            time=time-t
+        else:
+            if(y_vel>0):
+                y_pos=(0.5-time*y_vel)
+            elif(y_vel<0):
+                y_pos=(-0.5-time*y_vel)
+            return x_pos,y_pos
+
 
 
 # setting physics client
@@ -100,6 +128,10 @@ table_pos = [0, 0, 0]
 table_ori = p.getQuaternionFromEuler([0, 0, 0])
 table = p.loadURDF("table(1).urdf", table_pos, table_ori)
 
+hitbot_pos=[-0.45,0,0.26]
+hitbot_ori=p.getQuaternionFromEuler([0,0,0])
+hitbot=p.loadURDF("hitbot.urdf",hitbot_pos,hitbot_ori)
+
 p.changeDynamics(table, 0, restitution=1)
 p.changeDynamics(table, 1, restitution=1)
 p.changeDynamics(table, 2, restitution=1)
@@ -107,15 +139,16 @@ p.changeDynamics(table, 3, restitution=1)
 p.changeDynamics(table, 4, restitution=1)
 p.changeDynamics(table, 5, restitution=1)
 
-# setting kuka bot
-kuka = p.loadURDF("model.urdf", [-1.0, 0, 0], p.getQuaternionFromEuler([0, 0, 0]))
+
 
 # creating constraints for table
 p.createConstraint(plane, -1, table, -1, p.JOINT_FIXED, [0, 0, 0], table_pos, [0, 0, 0])
+p.createConstraint(table,-1,hitbot,-1, p.JOINT_FIXED,[0,0,0],hitbot_pos,[0,0,0],hitbot_ori)
+
 
 time.sleep(1)
 count = 0
-puck = simple()
+puck = notsosimple()
 p.changeDynamics(puck, -1, restitution=1)
 # notsosimple()
 ALPHA = 1
@@ -124,53 +157,21 @@ timestamps = []
 for i in range(10000):
     p.setRealTimeSimulation(1)
     p.setTimeStep(1.0/240.0)
-    # p.stepSimulation()
-
-    # #puck_pos, puck_ori = p.getBasePositionAndOrientation(puck)
-    #
-    #
     # setting camera
     view = p.computeViewMatrix([0, 0, 1.4], [0, 0, 0.5], [0, 1, 0])
     projection = p.computeProjectionMatrixFOV(90, 1, 0.1, 3.1)
-    # p.stepSimulation()
-    #
-    # # getting images
     images = p.getCameraImage(112, 112, viewMatrix=view, projectionMatrix=projection)
-    # p.stepSimulation()
     rgb = images[2]
     rgb = np.array(rgb)
-    # #p.stepSimulation()
     rgb = np.reshape(rgb, (112, 112, 4))
     rgb = np.uint8(rgb)
-    # p.stepSimulation()
     image = cv2.cvtColor(rgb, cv2.COLOR_BGR2RGB)
-    # cv2.imshow("image0", image)
-    # cv2.waitKey(0)
-    # p.stepSimulation()
-    # centrec = getcentre(image)
-    # # p.stepSimulation()
-    # # #
-    #
-    # if i % 10 == 0 and i != 0 and count <= 2:
-    #     count = count + 1
-    #     # print(centrec)
-    #     dx = centrepoints[i - 10][0] - centrepoints[i][
-    #         0]  # difference in x-coord of the two centre positions at i and i-2
-    #     dy = centrepoints[i - 10][1] - centrepoints[i][
-    #         1]  # difference in y-coord of the two centre positions at i and i-2
-    #     distance = math.sqrt(abs(dx) * abs(dx) + abs(dy) * abs(dy))  # distance btw the two centres
-    #     # print(distance)
-    #     velocity = (distance / abs(
-    #         timestamps[i] - timestamps[i - 10])) / pixelpermetric  # speed calc using speed=distance/time
-    #     print("Calculated velocity", velocity)
-    #     angle = math.degrees(math.atan2(dy, dx))  # angle from the x-axis
-    #     print("angle =", angle)
-    #     velac = p.getBaseVelocity(puck)
-    #     # abs_vel = math.sqrt((velac[0][0]**2)+(velac[0][1]**2))
-    #     print("actual velocity", velac)
-    velocity, centre, angle, velac = calculatevelocity(i, image, puck)
-    print(velocity," ",centre, " ", angle, "", velac)
+    if(calculatevelocity(i,image,puck)!=None):
 
-    # time.sleep(1)
+        velocity, centre, angle = calculatevelocity(i, image, puck)
+        x_pos,y_pos=cal_pos_defend(centre,velocity,angle)
+        print(velocity," ",centre, " ", angle)
+        p.setJointMotorControl2(hitbot, jointIndex=2, controlMode=p.POSITION_CONTROL, targetPosition=y_pos, maxVelocity=1)
+        p.setJointMotorControl2(hitbot, jointIndex=1, controlMode=p.POSITION_CONTROL, targetPosition=x_pos, maxVelocity=1)
 
 p.disconnect()
